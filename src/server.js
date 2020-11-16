@@ -1,10 +1,12 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import handlebars from 'express-handlebars';
 import Routes from './routes';
 import bodyParser from 'body-parser';
 import fileupload from 'express-fileupload';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import path from 'path';
 
 dotenv.config();
 
@@ -17,6 +19,10 @@ app.use(
     useTempFiles: true
   })
 );
+
+app.engine('.hbs', handlebars({ defaultLayout: 'main', extname: '.hbs' }));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', '.hbs');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
